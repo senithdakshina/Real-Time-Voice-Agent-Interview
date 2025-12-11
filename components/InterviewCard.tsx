@@ -1,7 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import Image from "next/image";
-import {getRandomInterviewCover} from "@/lib/utils"
+import { getRandomInterviewCover } from "@/lib/utils";
 const InterviewCard = ({
   interviewid,
   userid,
