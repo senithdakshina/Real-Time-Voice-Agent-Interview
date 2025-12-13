@@ -23,6 +23,17 @@ const InterviewCard = ({
             <p className="badge-text"> {normalizedType}</p>
             </div>
             <Image src={getRandomInterviewCover()} alt="cover iamge" width={90} height={90} className="rounded-full object-fit size-[90px]"></Image>
+            
+            <h3 className="mt-5 capitalize">
+              {role} Interview
+            </h3>
+
+            <div className="flex flex-row gap-5 mt-3">
+              <div>
+                
+              </div>
+            </div>
+
         </div>
       </div>
     </div>
