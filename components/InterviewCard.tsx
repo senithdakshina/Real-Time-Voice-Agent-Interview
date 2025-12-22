@@ -5,7 +5,7 @@ import { getRandomInterviewCover } from "@/lib/utils";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import DisplayTechIcons from "./DisplayTechIcons";
-import { Facebook } from "lucide-react";
+import { CardSim, Facebook } from "lucide-react";
 const InterviewCard = ({
   interviewid,
   userid,
