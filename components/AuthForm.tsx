@@ -12,7 +12,8 @@ import FormField from "./formfeild";
 import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth/cordova";
 import { auth } from "@/firebase/client";
-import { SignUp } from "@/lib/actions/auth.action ";
+import { signIn, SignUp } from "@/lib/actions/auth.action ";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 
 const authFormSchema = (type: FormType) => {
@@ -60,6 +61,17 @@ const AuthForm = ({ type }: { type: FormType }) => {
         toast.success('Account Created successfully.Please sign in!');
         router.push('/sign-in')
       } else {
+        const{email , password} = values;
+        const userCredentials =  await signInWithEmailAndPassword(auth,email,password);
+        const idToken = await userCredentials.user.getIdToken();
+        if(!idToken){
+          toast.error("Sign in faild!!")
+          return;
+        }
+        await signIn({
+          email,idToken
+        })
+
         toast.success('successfully login!');
         router.push('/')
         // console.log("signIn", values);

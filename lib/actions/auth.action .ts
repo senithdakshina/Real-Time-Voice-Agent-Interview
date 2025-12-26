@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { auth, db } from "@/firebase/admin";
+import { success } from "zod";
 
 
 const ONE_WEEK = 60*60*24*7 *1000;
@@ -24,6 +25,10 @@ export async function SignUp(params:SignUpParams) {
         await db.collection('users').doc(uid).set({
             name,email
         })
+        return{
+          success: true,
+          message:"Account created successfully!!! Please sign - in."
+        }
 
     }catch(e : any){
         console.error('Error creating User :',e);
