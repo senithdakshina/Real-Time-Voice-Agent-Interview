@@ -65,7 +65,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
         }
 
         toast.success("Account created successfully. Please sign in.");
-        router.push("/sign-in");
+        router.push("/sign_in");
       } else {
         const { email, password } = data;
 
@@ -139,7 +139,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
             />
 
             <Button className="btn" type="submit">
-              {isSignIn ? "Sign In" : "Create an Account"}
+              {isSignIn ? "Sign_in" : "Create an Account"}
             </Button>
           </form>
         </Form>
@@ -147,7 +147,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
         <p className="text-center">
           {isSignIn ? "No account yet?" : "Have an account already?"}
           <Link
-            href={!isSignIn ? "/sign-in" : "/sign-up"}
+            href={!isSignIn ? "/sign_in" : "/sign_up"}
             className="font-bold text-user-primary ml-1"
           >
             {!isSignIn ? "Sign In" : "Sign Up"}
