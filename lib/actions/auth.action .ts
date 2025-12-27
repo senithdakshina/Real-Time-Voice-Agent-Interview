@@ -7,7 +7,7 @@ import { success } from "zod";
 
 const ONE_WEEK = 60*60*24*7 *1000;
 
-export async function SignUp(params:SignUpParams) {
+export async function signUp(params:SignUpParams) {
   
 
 
@@ -40,7 +40,7 @@ export async function SignUp(params:SignUpParams) {
         }
         return {
             success:false,
-            message:"Failed to create an account"
+            message:"Failed to create an account auth"
         }
     }
     
@@ -52,7 +52,7 @@ export async function setSessionCookie(idToken:string) {
         expiresIn : ONE_WEEK,
     })
 
-    cookieStore.set('session' ,sessionCookie {
+    cookieStore.set('session' ,sessionCookie ,{
         maxAge :ONE_WEEK,
         httpOnly : true,
         secure: process.env.NODE_ENV === 'production',
