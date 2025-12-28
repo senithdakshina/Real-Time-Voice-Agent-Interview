@@ -159,3 +159,4 @@ const AuthForm = ({ type }: { type: FormType }) => {
 };
 
 export default AuthForm;
+sdfsdf

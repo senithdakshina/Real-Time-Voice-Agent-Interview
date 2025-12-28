@@ -21,3 +21,4 @@ const initFirebaseAdmin = () => {
 };
 
 export const { auth, db } = initFirebaseAdmin();
+wawd
