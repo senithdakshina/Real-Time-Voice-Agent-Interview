@@ -1,6 +1,15 @@
 import React from "react";
+
 import Image from "next/image";
+
+enum CallStatus{
+  INACTIVE = 'INACTIVE',
+  CONNECTING  = 'CONNECTING',
+  ACTIVE = 'ACTIVE',
+  FINISHED = 'FINISHED',
+}
 const Agent = ({ userName }: AgentProps) => {
+  const callStatus = CallStatus.ACTIVE
   const isSpeaking = true;
   return (
     <>
@@ -31,6 +40,18 @@ const Agent = ({ userName }: AgentProps) => {
           <h3>{userName}</h3>
           </div>
         </div>
+      </div>
+
+      <div className="w-full flex justify-center">
+        {callStatus !== 'ACTIVE' ? ( 
+          <button>
+            <span>
+              {callStatus === 'INACTIVE' || callStatus === 'FINISHED' ? 'call' : '. . .' }
+            </span>
+          </button>
+        ): (
+          <button className="btn-disconnect">END</button>
+        )}
       </div>
     </>
   );
