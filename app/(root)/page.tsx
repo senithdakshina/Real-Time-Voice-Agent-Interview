@@ -4,8 +4,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { dummyInterviews } from "@/constants";
 import InterviewCard from "@/components/InterviewCard";
+import { get } from "http";
+import { getCurrentUser,getInterviewById } from "@/lib/actions/auth.action ";
 
-const page = () => {
+const page = async() => {
+
+  const user = await getCurrentUser();
+  const userInterviews = await getInterviewById(user?.id!);
+
+  const hasPastInterviews = userInterviews?.length! > 0;
+  // const hasUpcomingInterviews = allInterview?.length! > 0;
+
   return (
     <>
       <section className="card-cta">
@@ -26,17 +35,24 @@ const page = () => {
         ></Image>
       </section>
       <section className="flex flex-col gap-6 mt-8">
+        
         <h2>Your interview</h2>
         <div className="interviews-section">
-          {dummyInterviews.map((interview) => (
-            <InterviewCard
-              key={interview.id}
-              role={interview.role}
-              type={interview.type}
-              techstack={interview.techstack}
-            />
-          ))}
-          <p>You haven&apos;t taken any interviews yet</p>
+          {hasPastInterviews ? (
+            userInterviews?.map((interview) => (
+              <InterviewCard
+                key={interview.id}
+                userId={user?.id}
+                interviewId={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt}
+              />
+            ))
+          ) : (
+            <p>You haven&apos;t taken any interviews yet</p>
+          )}
         </div>
       </section>
 
