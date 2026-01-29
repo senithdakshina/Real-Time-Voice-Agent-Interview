@@ -1,19 +1,27 @@
-import React from "react";
+import React, { use } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { dummyInterviews } from "@/constants";
 import InterviewCard from "@/components/InterviewCard";
 import { get } from "http";
-import { getCurrentUser,getInterviewById } from "@/lib/actions/auth.action ";
+import { getCurrentUser,getInterviewById, getLatestInterview } from "@/lib/actions/auth.action ";
+import { promise } from "zod";
 
 const page = async() => {
 
   const user = await getCurrentUser();
-  const userInterviews = await getInterviewById(user?.id!);
+  const [userInterviews,latestInterviews] = await Promise.all([
+    await getInterviewById(user?.id!),
+    await getLatestInterview({userId:user?.id!})
+  ])
+  // const userInterviews = await getInterviewById(user?.id!);
+  // const latestInterviews = await getLatestInterview({userId:user?.id!})
+
+
 
   const hasPastInterviews = userInterviews?.length! > 0;
-  // const hasUpcomingInterviews = allInterview?.length! > 0;
+  const hasUpcomingInterviews = latestInterviews?.length! > 0;
 
   return (
     <>
@@ -58,17 +66,22 @@ const page = async() => {
 
       <section className="flex flex-col gap-6 mt-8">
         <h2>Take an interview</h2>
-        {dummyInterviews.map((interview) => (
-          <InterviewCard
-            key={interview.id}
-            role={interview.role}
-            type={interview.type}
-            techstack={interview.techstack}
-          />
-        ))}
-        -
         <div className="interviews-section">
-          <p>There are no interviews available </p>
+          {hasUpcomingInterviews ? (
+            latestInterviews?.map((interview) => (
+              <InterviewCard
+                key={interview.id}
+                userId={user?.id}
+                interviewId={interview.id}
+                role={interview.role}
+                type={interview.type}
+                techstack={interview.techstack}
+                createdAt={interview.createdAt}
+              />
+            ))
+          ) : (
+            <p>There are no interviews available!!</p>
+          )}
         </div>
       </section>
     </>
