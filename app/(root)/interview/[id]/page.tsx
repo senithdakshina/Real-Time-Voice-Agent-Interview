@@ -40,7 +40,7 @@ const page = async ({ params }: RouteParams) => {
           </p>
         </div>
 
-        {/* Title like screenshot */}
+        {/* Title like screenshot*/}
         <h2 className="text-white text-lg font-semibold mt-8 mb-5">
           Interview generation
         </h2>
