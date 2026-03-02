@@ -5,21 +5,21 @@ import Image from "next/image";
 import { dummyInterviews } from "@/constants";
 import InterviewCard from "@/components/InterviewCard";
 import { get } from "http";
-import { getInterviewById, getLatestInterview } from "@/lib/actions/genaral.action";
-import {getCurrentUser} from "@/lib/actions/auth.action "
+import {
+  getInterviewById,
+  getLatestInterview,
+} from "@/lib/actions/genaral.action";
+import { getCurrentUser } from "@/lib/actions/auth.action ";
 import { promise } from "zod";
 
-const page = async() => {
-
+const page = async () => {
   const user = await getCurrentUser();
-  const [userInterviews,latestInterviews] = await Promise.all([
+  const [userInterviews, latestInterviews] = await Promise.all([
     await getInterviewById(user?.id!),
-    await getLatestInterview({userId:user?.id!})
-  ])
+    await getLatestInterview({ userId: user?.id! }),
+  ]);
   // const userInterviews = await getInterviewById(user?.id!);
   // const latestInterviews = await getLatestInterview({userId:user?.id!})
-
-
 
   const hasPastInterviews = userInterviews?.length! > 0;
   const hasUpcomingInterviews = latestInterviews?.length! > 0;
@@ -32,8 +32,10 @@ const page = async() => {
           <p className="text-lg">
             Practice on real interview questions & get instence feedback
           </p>
-          <Button asChild className="btn-primary maxc-sm:w-full"></Button>
-          <Link href="/interview">Start an Interview</Link>
+          {/* <Button asChild className="btn-primary maxc-sm:w-full"></Button> */}
+          <Button asChild className="btn-primary max-sm:w-full">
+            <Link href="/interview">Start an Interview</Link>
+          </Button>
         </div>
         <Image
           src="/robot.png"
@@ -44,7 +46,6 @@ const page = async() => {
         ></Image>
       </section>
       <section className="flex flex-col gap-6 mt-8">
-        
         <h2>Your interview</h2>
         <div className="interviews-section">
           {hasPastInterviews ? (
