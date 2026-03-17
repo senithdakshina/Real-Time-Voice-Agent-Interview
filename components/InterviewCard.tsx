@@ -7,7 +7,8 @@ import Link from "next/link";
 import DisplayTechIcons from "./DisplayTechIcons";
 import { CardSim, Facebook } from "lucide-react";
 import { id } from "zod/v4/locales";
-const InterviewCard = ({
+import { getFeedbackByInterviewId } from "@/lib/actions/genaral.action";
+const InterviewCard = async ({
   id,
   userId,
   role,
@@ -15,7 +16,7 @@ const InterviewCard = ({
   techstack,
   createdAt,
 }: InterviewCardProps) => {
-  const feedback = null as Feedback | null;
+  const feedback = userId && id? await getFeedbackByInterviewId({ interviewId: id,userId}) : null;
   const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
   const formattedate = dayjs(
     feedback?.createdAt || createdAt || Date.now()
